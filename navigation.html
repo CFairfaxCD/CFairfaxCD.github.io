@@ -1,0 +1,17 @@
+{% assign pages = site.html_pages | where: 'visible', true | where_exp: 'page', 'page.url contains include.context' | group_by: 'dir' %}
+<ul>
+  {% for group in pages %}
+    {% if group.size > 1 and group.name != include.context %}
+      <li class="{% if page.url contains group.name %}active{% endif %}">
+        <span>{{ group.name | replace: '/', '' | capitalize }}</span>
+        {% include navigation.html context=group.name %}
+      </li>
+    {% else %}
+      {% for item in group.items %}
+        <li>
+          <a href="{{ item.url }}">{{ item.title }}</a>
+        </li>
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+</ul>
