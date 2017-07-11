@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>Test Page Two</title>
+    </head>
+    <body>
+        <div class="nav">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/109421">Page Two</a>
+                </li>
+                <li>
+                    <a href="/109421ST1">Page One Success</a>
+                </li>
+                <li>
+                    <a href="/109421ST2">Page Two Success</a>
+                </li>
+            </ul>
+        </div>
+        <div class="content">
+            <h1>This one is 3 points for success!</h1>
+        </div>
+        <div id="scripts">
+            <script type=”text/javascript”>
+                var cdPriority = true;
+            </script>
+            <script type=”text/javascript”>
+                var cdScore = 3;
+            </script>​
+            <script type="text/javascript" src="https://analytics.clickdimensions.com/ts.js" > </script> 
+            <script type="text/javascript"> 
+                var cdAnalytics = new clickdimensions.Analytics('analytics.clickdimensions.com'); 
+                cdAnalytics.setAccountKey('au9Y6e3q8X0C3rUTVsGbNL'); 
+                cdAnalytics.setDomain('cfairfaxcd.github.io'); 
+                cdAnalytics.setScore(typeof(cdScore) == "undefined" ? 0 : (cdScore == 0 ? null : cdScore)); 
+                cdAnalytics.trackPage(); 
+            </script> 
+        </div>
+    </body>
+</html>
