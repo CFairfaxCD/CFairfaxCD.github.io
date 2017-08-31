@@ -152,7 +152,7 @@ var writeValues = function() {
     var loadedVisitor = fetchInputs();
     var valueFields = $('cd');
     valueFields.each(function(i){
-        var dynamo = $(this).arrt('data-dynamo');
+        var dynamo = $(this).attr('data-dynamo');
         if(dyanmo.indexOf('.') != -1){
             dyanmo = dynamo.split('.');
             if(loadedVisitor[dynamo[0]][dynamo[1]]) {
