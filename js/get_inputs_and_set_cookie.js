@@ -153,8 +153,8 @@ var writeValues = function() {
     var valueFields = $('cd');
     valueFields.each(function(i){
         var dynamo = $(this).attr('data-dynamo');
-        if(dyanmo.indexOf('.') != -1){
-            dyanmo = dynamo.split('.');
+        if(dynamo.indexOf('.') != -1){
+            dynamo = dynamo.split('.');
             if(loadedVisitor[dynamo[0]][dynamo[1]]) {
                 $(this).text(loadedVisitor[dynamo[0]][dynamo[1]]);
             }
