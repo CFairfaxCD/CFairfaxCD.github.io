@@ -113,7 +113,7 @@ var makeCookie = function(inputs, preSaved){
                                     Visitor['lead'] = {};
                                 }
                                 Visitor.lead[leadField] = inputs[i].value;
-                                delete preSaved[leadField];
+                                delete preSaved.lead[leadField];
                             } else {
                                 if(!Visitor.lead){
                                     Visitor['lead'] = {};
@@ -127,7 +127,7 @@ var makeCookie = function(inputs, preSaved){
                                     Visitor['contact'] = {};
                                 }
                                 Visitor.contact[contactField] = inputs[i].value;
-                                delete preSaved[contactField];
+                                delete preSaved.contact[contactField];
                             } else{
                                 if(!Visitor.contact){
                                     Visitor['contact'] = {};
