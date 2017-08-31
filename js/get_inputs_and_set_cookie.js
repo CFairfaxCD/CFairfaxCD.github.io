@@ -150,10 +150,10 @@ var makeCookie = function(inputs, preSaved){
 
 var writeValues = function() {
     var loadedVisitor = fetchInputs();
-    var valueFields = clickd_jquery('cd');
+    var valueFields = $('cd');
     valueFields.each(function(i){
-        if(loadedVisitor[this.attr('data-dynamo')]) {
-            clickd_jquery(this).text(loadedVisitor[clickd_jquery(this).attr('data-dynamo')]) 
+        if(loadedVisitor[$(this).attr('data-dynamo')]) {
+            $(this).text(loadedVisitor[$(this).attr('data-dynamo')]) 
         }
     });
     
