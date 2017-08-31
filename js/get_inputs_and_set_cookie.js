@@ -152,9 +152,16 @@ var writeValues = function() {
     var loadedVisitor = fetchInputs();
     var valueFields = $('cd');
     valueFields.each(function(i){
-        if(loadedVisitor[$(this).attr('data-dynamo')]) {
-            $(this).text(loadedVisitor[$(this).attr('data-dynamo')]) 
+        var dynamo = $(this).arrt('data-dynamo');
+        if(dyanmo.indexOf('.') != -1){
+            dyanmo = dynamo.split('.');
+            if(loadedVisitor[dynamo[0]][dynamo[1]]) {
+                $(this).text(loadedVisitor[dynamo[0]][dynamo[1]]);
+            }
+        } else {
+            if(loadedVisitor[dynamo]) {
+                $(this).text(loadedVisitor[dynamo]) 
+            }
         }
-    });
-    
+    }); 
 }
