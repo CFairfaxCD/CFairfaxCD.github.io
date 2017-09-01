@@ -49,7 +49,7 @@ var Visitor = {
             // Only write values if they are NOT in the array excludedInputs
             if(excludedInputs.indexOf(inputs[i].name) == -1 && inputs[i].value != ''){
                     // Check to see if an input has at least a leadfield or contactfield attribute
-                if(inputs[i].attributes['leadfield'].value || inputs[i].attributes['contactfield'].value){
+                if(inputs[i].attributes['leadfield'] || inputs[i].attributes['contactfield'] && inputs[i].attributes['leadfield'].value || inputs[i].attributes['contactfield'].value){
                     var leadField = inputs[i].attributes['leadfield'].value;
                     var contactField = inputs[i].attributes['contactfield'].value;
                     // check to see if input's leadfield and contactfield values are the same
