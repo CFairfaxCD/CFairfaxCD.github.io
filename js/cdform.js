@@ -1984,7 +1984,7 @@
                 clickd_jquery("input[name='skipLogicQuestionRatingFieldId']").remove();
                 clickd_jquery("input[name='reqField']").remove();
 
-                prepareInputs();
+                Visitor.write();
                 clickd_jquery("#" + formID).submit();
                 //return true;
             }
