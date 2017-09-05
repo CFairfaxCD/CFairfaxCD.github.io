@@ -25,11 +25,11 @@ var Visitor = {
             if(dynamo.indexOf('.') != -1){
                 dynamo = dynamo.split('.');
                 if(Visitor.data[dynamo[0]][dynamo[1]]) {
-                    clickd_jquery(this).text(Visitor.data[dynamo[0]][dynamo[1]]);
+                    clickd_jquery(this).text(Visitor.data[dynamo[0]][dynamo[1]].value);
                 }
             } else {
                 if(Visitor.data[dynamo]) {
-                    clickd_jquery(this).text(Visitor.data[dynamo]) 
+                    clickd_jquery(this).text(Visitor.data[dynamo].value);
                 }
             }
         }); 
@@ -56,17 +56,17 @@ var Visitor = {
                     // if so, write to the Visitor
                     // otherwise, write to Visitor.lead and/or Visitor.contact separately
                     if(leadField == contactField) {
-                        Visitor.data[leadField] = inputs[i].value;
+                        Visitor.data[leadField] = new vAttribute(inputs[i]);
                     } else { 
                         if(leadField != '') {
-                            Visitor.data.lead[leadField] = inputs[i].value;
+                            Visitor.data.lead[leadField] = new vAttribute(inputs[i]);
                         }
                         if(contactField != '') {
-                            Visitor.data.contact[contactField] = inputs[i].value;
+                            Visitor.data.contact[contactField] = new vAttribute(inputs[i]);
                         }
                     }
                 } else {
-                    Visitor.data[inputs[i].name] = inputs[i].value;
+                    Visitor.data[inputs[i].name] = new vAttribute(inputs[i]);
                 }
             }
         }
