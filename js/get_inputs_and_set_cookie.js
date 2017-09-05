@@ -18,6 +18,9 @@ var Visitor = {
         document.cookie = 'clickdynamo=' + cookieString + ';' + expires + ';path=/';
     },
     render : function() {
+        if(typeof clickd_jquery == 'function') {
+            var $ = clickd_jquery;
+        }
         Visitor.fetch();
         var valueFields = $('cd');
         valueFields.each(function(i){
