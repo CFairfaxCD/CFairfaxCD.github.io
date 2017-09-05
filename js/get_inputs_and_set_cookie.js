@@ -99,21 +99,3 @@ function vAttribute(input) {
     this.name = input.name;
     this.value = input.value;
 }
-
-window.onload = function() {
-    if(typeof jQuery == 'function') {
-        jQuery(document).ready(function(){
-            Visitor.render();
-            jQuery('.clickdform').submit(function(){
-                Visitor.write();
-            });
-        });
-    } else if(typeof clickd_jquery == 'function') {
-        clickd_jquery(document).ready(function(){
-            Visitor.render();
-            clickd_jquery('.clickdform').submit(function(){
-                Visitor.write();
-            });
-        });
-    }
-}
