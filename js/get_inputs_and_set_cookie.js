@@ -17,7 +17,7 @@ var Visitor = {
         // write the cookie
         document.cookie = 'clickdynamo=' + cookieString + ';' + expires + ';path=/';
     },
-    render : function() {
+    render : function(jQuery) {
         if(typeof clickd_jquery == 'function') {
             var jQuery = clickd_jquery;
         }
@@ -98,4 +98,22 @@ var Visitor = {
 function vAttribute(input) {
     this.name = input.name;
     this.value = input.value;
+}
+
+window.onload = function() {
+    if(typeof jQuery == 'function') {
+        jQuery(document).ready(function(){
+            Visitor.render(jQuery);
+            jQuery('.clickdform').submit(function(){
+                Visitor.write();
+            });
+        });
+    } else if(typeof clickd_jquery == 'function') {
+        clickd_jquery(document).ready(function(){
+            Visitor.render(clickd_jquery);
+            clickd_jquery('.clickdform').submit(function(){
+                Visitor.write();
+            });
+        });
+    }
 }

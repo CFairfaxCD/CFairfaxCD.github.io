@@ -27,24 +27,5 @@
 			var cdForms = new clickdimensions.Forms();
 		</script>
 		<script type="text/javascript" src="../js/get_inputs_and_set_cookie.js"></script>
-		<script>
-			window.onload = function() {
-				if(typeof jQuery == 'function') {
-					jQuery(document).ready(function(){
-						Visitor.render();
-						jQuery('.clickdform').submit(function(){
-							Visitor.write();
-						});
-					});
-				} else if(typeof clickd_jquery == 'function') {
-					clickd_jquery(document).ready(function(){
-						Visitor.render();
-						clickd_jquery('.clickdform').submit(function(){
-							Visitor.write();
-						});
-					});
-				}
-			}
-		</script>
 	</body>
 </html>
