@@ -19,20 +19,20 @@ var Visitor = {
     },
     render : function() {
         if(typeof clickd_jquery == 'function') {
-            var $ = clickd_jquery;
+            var jQuery = clickd_jquery;
         }
         Visitor.fetch();
-        var valueFields = $('cd');
+        var valueFields = jQuery('cd');
         valueFields.each(function(i){
-            var dynamo = $(this).attr('data-dynamo');
+            var dynamo = jQuery(this).attr('data-dynamo');
             if(dynamo.indexOf('.') != -1){
                 dynamo = dynamo.split('.');
                 if(Visitor.data[dynamo[0]][dynamo[1]]) {
-                    $(this).text(Visitor.data[dynamo[0]][dynamo[1]]);
+                    jQuery(this).text(Visitor.data[dynamo[0]][dynamo[1]]);
                 }
             } else {
                 if(Visitor.data[dynamo]) {
-                    $(this).text(Visitor.data[dynamo]) 
+                    jQuery(this).text(Visitor.data[dynamo]) 
                 }
             }
         }); 
@@ -101,10 +101,10 @@ function vAttribute(input) {
 }
 
 window.onload = function() {
-    if(typeof $ == 'function') {
-        $(document).ready(function(){
+    if(typeof jQuery == 'function') {
+        jQuery(document).ready(function(){
             Visitor.render();
-            $('.clickdform').submit(function(){
+            jQuery('.clickdform').submit(function(){
                 Visitor.write();
             });
         });
