@@ -97,7 +97,7 @@ function vAttribute(input) {
     this.value = input.value;
 }
 
-window.onload(function() {
+window.onload = function() {
     if(typeof $ == 'function') {
         $(document).ready(function(){
             Visitor.render();
@@ -113,4 +113,4 @@ window.onload(function() {
             });
         });
     }
-});
+}
