@@ -17,22 +17,19 @@ var Visitor = {
         // write the cookie
         document.cookie = 'clickdynamo=' + cookieString + ';' + expires + ';path=/';
     },
-    render : function(jQuery) {
-        if(typeof clickd_jquery == 'function') {
-            var jQuery = clickd_jquery;
-        }
+    render : function() {
         Visitor.fetch();
-        var valueFields = jQuery('cd');
+        var valueFields = clickd_jquery('cd');
         valueFields.each(function(i){
-            var dynamo = jQuery(this).attr('data-dynamo');
+            var dynamo = clickd_jquery(this).attr('data-dynamo');
             if(dynamo.indexOf('.') != -1){
                 dynamo = dynamo.split('.');
                 if(Visitor.data[dynamo[0]][dynamo[1]]) {
-                    jQuery(this).text(Visitor.data[dynamo[0]][dynamo[1]]);
+                    clickd_jquery(this).text(Visitor.data[dynamo[0]][dynamo[1]]);
                 }
             } else {
                 if(Visitor.data[dynamo]) {
-                    jQuery(this).text(Visitor.data[dynamo]) 
+                    clickd_jquery(this).text(Visitor.data[dynamo]) 
                 }
             }
         }); 
@@ -110,7 +107,7 @@ window.onload = function() {
         });
     } else if(typeof clickd_jquery == 'function') {
         clickd_jquery(document).ready(function(){
-            Visitor.render(clickd_jquery);
+            Visitor.render();
             clickd_jquery('.clickdform').submit(function(){
                 Visitor.write();
             });
