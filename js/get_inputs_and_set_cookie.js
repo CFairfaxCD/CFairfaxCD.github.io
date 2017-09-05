@@ -97,9 +97,20 @@ function vAttribute(input) {
     this.value = input.value;
 }
 
-$(document).ready(function(){
-    Visitor.render();
-    clickd_jquery('.clickdform').submit(function(){
-        Visitor.write();
-    });
-});
+window.onload(
+    if(typeof $ == 'function') {
+        $(document).ready(function(){
+            Visitor.render();
+            $('.clickdform').submit(function(){
+                Visitor.write();
+            });
+        });
+    } else if(typeof clickd_jquery == 'function') {
+        clickd_jquery(document).ready(function(){
+            Visitor.render();
+            clickd_jquery('.clickdform').submit(function(){
+                Visitor.write();
+            });
+        });
+    }
+);
