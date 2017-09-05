@@ -1983,8 +1983,6 @@
                 clickd_jquery("input[name='skipLogicQuestionListFieldId']").remove();
                 clickd_jquery("input[name='skipLogicQuestionRatingFieldId']").remove();
                 clickd_jquery("input[name='reqField']").remove();
-
-                Visitor.write();
                 clickd_jquery("#" + formID).submit();
                 //return true;
             }
