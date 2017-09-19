@@ -39,7 +39,7 @@ var Visitor = {
             var contactField = clickd_jquery(this).attr('contactfield') ? clickd_jquery(this).attr('contactfield') : '';
             var inputName = this.name; 
             if(leadField != '' || contactField != ''){
-                if(Visitor.data[leadField] && Visitor.data[leadField].name == leadField) {
+                if(leadField == contactField && Visitor.data[leadField] && Visitor.data[leadField].name == leadField) {
                     clickd_jquery(this).val(Visitor.data[leadField].value);
                 } else if(Visitor.data.lead[leadField] && Visitor.data.lead[leadField].name == leadField) {
                     clickd_jquery(this).val(Visitor.data.lead[leadField].value);
