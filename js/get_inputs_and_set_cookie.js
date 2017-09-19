@@ -113,16 +113,15 @@ function vAttribute(input, iName) {
     this.name = iName;
     this.value = input.value;
     this.type = input.type;
-}
 
-vAttribute.prototype.render = function(element) {
-    if(this.type == 'select-one') {
-        clickd_jquery(element).text(this.textValue);
-    } else {
-        clickd_jquery(element).text(this.value);
+    this.render = function(element) {
+        if(this.type == 'select-one') {
+            clickd_jquery(element).text(this.textValue);
+        } else {
+            clickd_jquery(element).text(this.value);
+        }
     }
 }
-
 
 if(Object.prototype.toString.call(clickd_jquery) != '[object Function]' && Object.prototype.toString.call(jQuery) == '[object Function]') {
     var clickd_jquery = jQuery.noConflict(true);
