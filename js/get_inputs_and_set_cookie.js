@@ -120,7 +120,7 @@ var Visitor = {
 
 function vAttribute(input, iName) {
     if(input.type == 'select-one') {
-        this.textValue = input.hasOwnProperty('innerHTML') ? clickd_jquery('option[value="' + clickd_jquery(input).val() + '"]', clickd_jquery(input)).text() : input.textValue;
+        this.textValue = input.innerHTML ? clickd_jquery('option[value="' + clickd_jquery(input).val() + '"]', clickd_jquery(input)).text() : input.textValue;
     }
     this.name = iName;
     this.value = input.value;
