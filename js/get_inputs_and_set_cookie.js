@@ -143,8 +143,10 @@ window.onload = function() {
         });
     }
 }
-if(Object.prototype.toString.call(clickd_jquery) == '[object Function]') {
-    console.log(Object.prototype.toString.call(clickd_jquery))
+if(Object.prototype.toString.call(clickd_jquery) != '[object Function]' && Object.prototype.toString.call(jQuery) == '[object Function]') {
+    var clickd_jquery = jQuery.noConflict(true);
+} else if(Object.prototype.toString.call(clickd_jquery) != '[object Function]' && Object.prototype.toString.call($) == '[object Function]') {
+    var clickd_jquery = $.noConflict(true);
 }
 clickd_jquery(document).ready(function(){
     Visitor.render();
