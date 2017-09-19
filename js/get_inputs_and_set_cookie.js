@@ -5,7 +5,7 @@ var Visitor = {
     },
     write : function() {
         Visitor.fetch();
-        var inputs = clickd_jquery('.clickdform input');
+        var inputs = clickd_jquery('.clickdform input, .clickdform select');
 
         Visitor.update(inputs);
 
@@ -25,15 +25,13 @@ var Visitor = {
             if(dynamo.indexOf('.') != -1){
                 dynamo = dynamo.split('.');
                 if(Visitor.data[dynamo[0]][dynamo[1]]) {
-                    clickd_jquery(this).text(Visitor.data[dynamo[0]][dynamo[1]].value);
+                    Visitor.data[dynamo[0]][dynamo[1]].render(this);
                 }
-            } else {
-                if(Visitor.data[dynamo]) {
-                    clickd_jquery(this).text(Visitor.data[dynamo].value);
-                }
+            } else if(Visitor.data[dynamo]) {
+                Visitor.data[dynamo].render(this);
             }
         });
-        var cdInputs = clickd_jquery('.clickdform input');
+        var cdInputs = clickd_jquery('.clickdform input, .clickdform select');
         cdInputs.each(function(i){
             var leadField = clickd_jquery(this).attr('leadfield') ? clickd_jquery(this).attr('leadfield') : '';
             var contactField = clickd_jquery(this).attr('contactfield') ? clickd_jquery(this).attr('contactfield') : '';
@@ -109,9 +107,22 @@ var Visitor = {
 }
 
 function vAttribute(input, iName) {
+    if(input.tagName == 'SELECT') {
+        this.textValue = clickd_jquery('option[value=' + clickd_jquery(input).val() + ']', input).text();
+    }
     this.name = iName;
     this.value = input.value;
+    this.type = input.type;
 }
+
+vAttribute.prototype.render = function(element) {
+    if(this.type == 'select-one') {
+        clickd_jquery(element).text(this.textValue);
+    } else {
+        clickd_jquery(element).text(this.value);
+    }
+}
+
 
 if(Object.prototype.toString.call(clickd_jquery) != '[object Function]' && Object.prototype.toString.call(jQuery) == '[object Function]') {
     var clickd_jquery = jQuery.noConflict(true);
