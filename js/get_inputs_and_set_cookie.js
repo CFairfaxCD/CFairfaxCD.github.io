@@ -21,6 +21,7 @@ var Visitor = {
         Visitor.fetch();
         var valueFields = clickd_jquery('cd');
         valueFields.each(function(i){
+            console.log(i);
             var dynamo = clickd_jquery(this).attr('data-dynamo');
             if(dynamo.indexOf('.') != -1){
                 dynamo = dynamo.split('.');
@@ -120,7 +121,7 @@ var Visitor = {
 
 function vAttribute(input, iName) {
     if(input.type == 'select-one') {
-        this.textValue = clickd_jquery('option[value=' + clickd_jquery(input).val() + ']', input).text();
+        this.textValue = clickd_jquery(input).val() ? clickd_jquery('option[value=' + clickd_jquery(input).val() + ']', input).text() : input.textValue;
     }
     this.name = iName;
     this.value = input.value;
