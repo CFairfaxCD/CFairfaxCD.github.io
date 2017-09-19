@@ -119,18 +119,29 @@ window.onload = function() {
     console.log(Object.prototype.toString.call(jQuery))
     if(typeof clickd_jquery == 'function') {
         console.log('clickd_jquery');
-    }
-    if(typeof jQuery == 'function') {
-        console.log('jQuery');
-    }
-    if(typeof clickd_jquery != 'function' && typeof jQuery == 'function') {
-        console.log('setting no conflict');
-        var clickd_jquery = jQuery.noConflict(true);
-    }
-    clickd_jquery(document).ready(function(){
-        Visitor.render();
-        clickd_jquery('.clickdform').submit(function(){
-            Visitor.write();
+        clickd_jquery(document).ready(function(){
+            Visitor.render();
+            clickd_jquery('.clickdform').submit(function(){
+                Visitor.write();
+            });
         });
-    });
+    } else if(typeof jQuery == 'function') {
+        console.log('jQuery');
+        var clickd_jquery = jQuery.noConflict(true);
+        clickd_jquery(document).ready(function(){
+            Visitor.render();
+            clickd_jquery('.clickdform').submit(function(){
+                Visitor.write();
+            });
+        });
+    } else if(typeof $ == 'function') {
+        console.log('setting no conflict');
+        var clickd_jquery = $.noConflict(true);
+        clickd_jquery(document).ready(function(){
+            Visitor.render();
+            clickd_jquery('.clickdform').submit(function(){
+                Visitor.write();
+            });
+        });
+    }
 }
