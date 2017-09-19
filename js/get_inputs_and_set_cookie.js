@@ -116,7 +116,7 @@ function vAttribute(input, iName) {
 
 window.onload = function() {
     if(typeof clickd_jquery != 'function' && typeof jQuery == 'function') {
-        var clickd_jquery = jQuery;
+        var clickd_jquery = jQuery.noConflict(true);
     }
     clickd_jquery(document).ready(function(){
         Visitor.render();
