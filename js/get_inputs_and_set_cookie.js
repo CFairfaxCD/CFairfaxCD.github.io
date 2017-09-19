@@ -32,7 +32,24 @@ var Visitor = {
                     clickd_jquery(this).text(Visitor.data[dynamo].value);
                 }
             }
-        }); 
+        });
+        var cdInputs = clickd_jquery('.clickdform input');
+        cdInputs.each(function(i){
+            var leadField = clickd_jquery(this).attr('leadfield') ? clickd_jquery(this).attr('leadfield') : '';
+            var contactField = clickd_jquery(this).attr('contactfield') ? clickd_jquery(this).attr('contactfield') : '';
+            var inputName = this.name; 
+            if(leadField != '' || contactField != ''){
+                if(Visitor.data[leadField] && Visitor.data[leadField].name == leadField) {
+                    clickd_jquery(this).val(Visitor.data[leadField].value);
+                } else if(Visitor.data.lead[leadField] && Visitor.data.lead[leadField].name == leadField) {
+                    clickd_jquery(this).val(Visitor.data.lead[leadField].value);
+                } else if(Visitor.data.contact[contactField] && Visitor.data.contact[contactField].name == contactField) {
+                    clickd_jquery(this).val(Visitor.data.contact[contactField].value);
+                }
+            } else if(Visitor.data[inputName] && Visitor.data[inputName].name == inputName) {
+                clickd_jquery(this).val(Visitor.data[inputName].value);
+            }
+        });
     },
     fetch : function() {
         vString = Visitor.getVCookie('clickdynamo');
@@ -56,17 +73,17 @@ var Visitor = {
                     // if so, write to the Visitor
                     // otherwise, write to Visitor.lead and/or Visitor.contact separately
                     if(leadField == contactField) {
-                        Visitor.data[leadField] = new vAttribute(inputs[i]);
+                        Visitor.data[leadField] = new vAttribute(inputs[i], leadField);
                     } else { 
                         if(leadField != '') {
-                            Visitor.data.lead[leadField] = new vAttribute(inputs[i]);
+                            Visitor.data.lead[leadField] = new vAttribute(inputs[i], leadField);
                         }
                         if(contactField != '') {
-                            Visitor.data.contact[contactField] = new vAttribute(inputs[i]);
+                            Visitor.data.contact[contactField] = new vAttribute(inputs[i], contactField);
                         }
                     }
                 } else {
-                    Visitor.data[inputs[i].name] = new vAttribute(inputs[i]);
+                    Visitor.data[inputs[i].name] = new vAttribute(inputs[i], inputs[i].name);
                 }
             }
         }
@@ -92,25 +109,19 @@ var Visitor = {
     }
 }
 
-function vAttribute(input) {
-    this.name = input.name;
+function vAttribute(input, iName) {
+    this.name = iName;
     this.value = input.value;
 }
 
 window.onload = function() {
-    if(typeof jQuery == 'function') {
-        jQuery(document).ready(function(){
-            Visitor.render(jQuery);
-            jQuery('.clickdform').submit(function(){
-                Visitor.write();
-            });
-        });
-    } else if(typeof clickd_jquery == 'function') {
-        clickd_jquery(document).ready(function(){
-            Visitor.render();
-            clickd_jquery('.clickdform').submit(function(){
-                Visitor.write();
-            });
-        });
+    if(typeof clickd_jquery != 'function' && typeof jQuery == 'function') {
+        var clickd_jquery = jQuery;
     }
+    clickd_jquery(document).ready(function(){
+        Visitor.render();
+        clickd_jquery('.clickdform').submit(function(){
+            Visitor.write();
+        });
+    });
 }
