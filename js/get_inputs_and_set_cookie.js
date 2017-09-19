@@ -21,7 +21,6 @@ var Visitor = {
         Visitor.fetch();
         var valueFields = clickd_jquery('cd');
         valueFields.each(function(i){
-            console.log(i);
             var dynamo = clickd_jquery(this).attr('data-dynamo');
             if(dynamo.indexOf('.') != -1){
                 dynamo = dynamo.split('.');
