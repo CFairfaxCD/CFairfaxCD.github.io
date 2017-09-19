@@ -62,13 +62,12 @@ var Visitor = {
         var excludedInputs = ['cd_postsettings', 'cd_domainalias', 'cd_timezone', 'cd_domain', 'cd_accountkey', 'reqField', '', 'iQapTcha'];
         for(i = 0; i < inputs.length; i++){
             // Check to see if the input name exists in the array ecludedInputs
-            // indexOf() returns -1 when the value has no index in the array
             // Only write values if they are NOT in the array excludedInputs
             if(excludedInputs.indexOf(inputs[i].name) == -1 && inputs[i].value != ''){
-                    // Check to see if an input has at least a leadfield or contactfield attribute
-                if(inputs[i].attributes['leadfield'] || inputs[i].attributes['contactfield']){
-                    var leadField = inputs[i].attributes['leadfield'].value;
-                    var contactField = inputs[i].attributes['contactfield'].value;
+                // Check to see if an input has at least a leadfield or contactfield attribute
+                var leadField = inputs[i].attributes['leadfield'] ? inputs[i].attributes['leadfield'].value : '';
+                var contactField = inputs[i].attributes['contactfield'] ? inputs[i].attributes['contactfield'].value : '';
+                if(leadField != '' || contactField != ''){
                     // check to see if input's leadfield and contactfield values are the same
                     // if so, write to the Visitor
                     // otherwise, write to Visitor.lead and/or Visitor.contact separately
