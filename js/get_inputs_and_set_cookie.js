@@ -115,6 +115,8 @@ function vAttribute(input, iName) {
 }
 
 window.onload = function() {
+    console.log(Object.prototype.toString.call(clickd_jquery))
+    console.log(Object.prototype.toString.call(jQuery))
     if(typeof clickd_jquery == 'function') {
         console.log('clickd_jquery');
     }
