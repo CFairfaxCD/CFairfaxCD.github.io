@@ -54,6 +54,18 @@ var Visitor = {
 
         if (vString != '') {
             Visitor.data = JSON.parse(vString);
+            for(var key in Visitor.data) {
+                if(Visitor.data.hasOwnProperty(key)) {
+                    for(var child in Visitor.data[key]) {
+                        if(Visitor.data[key].hasOwnProperty(child) && Visitor.data[key][child].hasOwnProperty('name')) {
+                            Visitor.data[key][child]  = new vAttribute(Visitor.data[key][child], Visitor.data[key][child].name);
+                        }
+                    }
+                    if(Visitor.data[key].hasOwnProperty('name')) {
+                        Visitor.data[key]  = new vAttribute(Visitor.data[key], Visitor.data[key].name);
+                    }
+                }
+            }
         }
     },
     update : function(inputs) {
@@ -107,19 +119,19 @@ var Visitor = {
 }
 
 function vAttribute(input, iName) {
-    if(input.tagName == 'SELECT') {
+    if(input.type == 'select-one') {
         this.textValue = clickd_jquery('option[value=' + clickd_jquery(input).val() + ']', input).text();
     }
     this.name = iName;
     this.value = input.value;
     this.type = input.type;
+}
 
-    this.render = function(element) {
-        if(this.type == 'select-one') {
-            clickd_jquery(element).text(this.textValue);
-        } else {
-            clickd_jquery(element).text(this.value);
-        }
+vAttribute.prototype.render = function(element) {
+    if(this.type == 'select-one') {
+        clickd_jquery(element).text(this.textValue);
+    } else {
+        clickd_jquery(element).text(this.value);
     }
 }
 
