@@ -115,8 +115,6 @@ function vAttribute(input, iName) {
 }
 
 window.onload = function() {
-    console.log(Object.prototype.toString.call(clickd_jquery))
-    console.log(Object.prototype.toString.call(jQuery))
     if(typeof clickd_jquery == 'function') {
         console.log('clickd_jquery');
         clickd_jquery(document).ready(function(){
@@ -145,7 +143,9 @@ window.onload = function() {
         });
     }
 }
-console.log(Object.prototype.toString.call(clickd_jquery))
+if(Object.prototype.toString.call(clickd_jquery) == '[object Function]') {
+    console.log(Object.prototype.toString.call(clickd_jquery))
+}
 clickd_jquery(document).ready(function(){
     Visitor.render();
     clickd_jquery('.clickdform').submit(function(){
