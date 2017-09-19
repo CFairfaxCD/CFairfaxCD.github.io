@@ -113,35 +113,6 @@ function vAttribute(input, iName) {
     this.value = input.value;
 }
 
-window.onload = function() {
-    if(typeof clickd_jquery == 'function') {
-        console.log('clickd_jquery');
-        clickd_jquery(document).ready(function(){
-            Visitor.render();
-            clickd_jquery('.clickdform').submit(function(){
-                Visitor.write();
-            });
-        });
-    } else if(typeof jQuery == 'function') {
-        console.log('jQuery');
-        var clickd_jquery = jQuery.noConflict(true);
-        clickd_jquery(document).ready(function(){
-            Visitor.render();
-            clickd_jquery('.clickdform').submit(function(){
-                Visitor.write();
-            });
-        });
-    } else if(typeof $ == 'function') {
-        console.log('setting no conflict');
-        var clickd_jquery = $.noConflict(true);
-        clickd_jquery(document).ready(function(){
-            Visitor.render();
-            clickd_jquery('.clickdform').submit(function(){
-                Visitor.write();
-            });
-        });
-    }
-}
 if(Object.prototype.toString.call(clickd_jquery) != '[object Function]' && Object.prototype.toString.call(jQuery) == '[object Function]') {
     var clickd_jquery = jQuery.noConflict(true);
 } else if(Object.prototype.toString.call(clickd_jquery) != '[object Function]' && Object.prototype.toString.call($) == '[object Function]') {
