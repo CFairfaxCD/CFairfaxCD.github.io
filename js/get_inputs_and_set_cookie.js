@@ -115,7 +115,14 @@ function vAttribute(input, iName) {
 }
 
 window.onload = function() {
+    if(typeof clickd_jquery == 'function') {
+        console.log('clickd_jquery');
+    }
+    if(typeof jQuery == 'function') {
+        console.log('jQuery');
+    }
     if(typeof clickd_jquery != 'function' && typeof jQuery == 'function') {
+        console.log('setting no conflict');
         var clickd_jquery = jQuery.noConflict(true);
     }
     clickd_jquery(document).ready(function(){
