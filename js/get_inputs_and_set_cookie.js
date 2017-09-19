@@ -145,3 +145,10 @@ window.onload = function() {
         });
     }
 }
+console.log(Object.prototype.toString.call(clickd_jquery))
+clickd_jquery(document).ready(function(){
+    Visitor.render();
+    clickd_jquery('.clickdform').submit(function(){
+        Visitor.write();
+    });
+});
