@@ -4,6 +4,7 @@ var Visitor = {
         lead : {}
     },
     write : function() {
+        // update the Visitor.data object and then write updated information to a cookie
         Visitor.fetch();
         var inputs = clickd_jquery('.clickdform input, .clickdform select');
 
@@ -19,6 +20,29 @@ var Visitor = {
     },
     render : function() {
         Visitor.fetch();
+        var ifElements = clickd_jquery('cd-if');
+        ifElements.each(function(i){
+            var dynamoIf = clickd_jquery(this).attr('data-dy-if');
+            if(dynamoIf.indexOf('=') != -1) {
+                dynamoIf = dynamoIf.split('=');
+                if(dynamoIf[0] != '' && dynamoIf[0].indexOf('.') != -1) {
+                    dynamoIf[0] = dynamoIf[0].split('.');
+                    if(Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].type == 'select-one' && Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].textValue == dynamoIf[1]) {
+                        this.style.display = '';
+                    } else if(Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].value == dynamoIf[1]) {
+                        this.style.display = '';
+                    }
+                } else if(dynamoIf[0] != '') {
+                    if(Visitor.data[dynamoIf[0]].type == 'select-one' && Visitor.data[dynamoIf[0]].textValue == dynamoIf[1]) {
+                        this.style.display = '';
+                    } else if(Visitor.data[dynamoIf[0]].value == dynamoIf[1]) {
+                        this.style.display = '';
+                    }
+                }
+            }
+        });
+        // handle rendering Visitor.data attributes to <cd></cd> tags
+        // this logic needs to be moved to vAttribute.prototype.render()
         var valueFields = clickd_jquery('cd');
         valueFields.each(function(i){
             var dynamo = clickd_jquery(this).attr('data-dynamo');
@@ -31,6 +55,8 @@ var Visitor = {
                 Visitor.data[dynamo].render(this);
             }
         });
+        // handle updating input values to reflect information found in Visitor.data
+        // all of this logic needs to be moved to vAttribute.prototype.render()
         var cdInputs = clickd_jquery('.clickdform input, .clickdform select');
         cdInputs.each(function(i){
             var leadField = clickd_jquery(this).attr('leadfield') ? clickd_jquery(this).attr('leadfield') : '';
@@ -51,9 +77,12 @@ var Visitor = {
     },
     fetch : function() {
         vString = Visitor.getVCookie('clickdynamo');
-
+        // check to make sure the returned cookie is not empty
+        // may need to set this up to catch an exception when the returned cookie is empty - talk through this
         if (vString != '') {
             Visitor.data = JSON.parse(vString);
+            // cycle through the Visitor.data object,
+            // re-instantiating each property as a vAttribute object
             for(var key in Visitor.data) {
                 if(Visitor.data.hasOwnProperty(key)) {
                     for(var child in Visitor.data[key]) {
@@ -75,8 +104,12 @@ var Visitor = {
             // Only write values if they are NOT in the array excludedInputs
             if(excludedInputs.indexOf(inputs[i].name) == -1 && inputs[i].value != ''){
                 // Check to see if an input has at least a leadfield or contactfield attribute
+                // if not, assign an empty string to the variable(s)
                 var leadField = inputs[i].attributes['leadfield'] ? inputs[i].attributes['leadfield'].value : '';
                 var contactField = inputs[i].attributes['contactfield'] ? inputs[i].attributes['contactfield'].value : '';
+                // does leadField/contactField contain a value?
+                // if so, assign the attribute name using that value
+                // otherwise, assign it using the input name
                 if(leadField != '' || contactField != ''){
                     // check to see if input's leadfield and contactfield values are the same
                     // if so, write to the Visitor
@@ -118,7 +151,9 @@ var Visitor = {
     }
 }
 
+// Attribute constructor
 function vAttribute(input, iName) {
+    // check for 'select' inputs and add a human-readable "textValue" to allow for meaningful rendered data
     if(input.type == 'select-one') {
         this.textValue = input.innerHTML ? clickd_jquery('option[value="' + clickd_jquery(input).val() + '"]', clickd_jquery(input)).text() : input.textValue;
     }
@@ -127,6 +162,8 @@ function vAttribute(input, iName) {
     this.type = input.type;
 }
 
+// add the render method to the vAttribute prototype so an individual render method isn't created
+// for each individual attribute
 vAttribute.prototype.render = function(element) {
     if(this.type == 'select-one') {
         clickd_jquery(element).text(this.textValue);
@@ -134,6 +171,11 @@ vAttribute.prototype.render = function(element) {
         clickd_jquery(element).text(this.value);
     }
 }
+
+var hiddenIfs = document.querySelectorAll('cd-if');
+hiddenIfs.forEach(function(element){
+    element.style.display = 'none';
+});
 
 if(Object.prototype.toString.call(clickd_jquery) != '[object Function]' && Object.prototype.toString.call(jQuery) == '[object Function]') {
     var clickd_jquery = jQuery.noConflict(true);
