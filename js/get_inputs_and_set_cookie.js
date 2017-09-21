@@ -155,11 +155,24 @@ var Visitor = {
 function vAttribute(input, iName) {
     // check for 'select' inputs and add a human-readable "textValue" to allow for meaningful rendered data
     if(input.type == 'select-one') {
-        this.textValue = input.innerHTML ? clickd_jquery('option[value="' + clickd_jquery(input).val() + '"]', clickd_jquery(input)).text() : input.textValue;
+        if(input.innerHTML){
+            if(clickd_jquery('option[value="' + clickd_jquery(input).val() + '"]', clickd_jquery(input)).text() != ''){
+                this.textValue = clickd_jquery('option[value="' + clickd_jquery(input).val() + '"]', clickd_jquery(input)).text();
+                this.name = iName;
+                this.value = input.value;
+                this.type = input.type;
+            }
+        } else {
+            this.textValue = input.textValue;
+            this.name = iName;
+            this.value = input.value;
+            this.type = input.type;
+        }
+    } else {
+        this.name = iName;
+        this.value = input.value;
+        this.type = input.type;
     }
-    this.name = iName;
-    this.value = input.value;
-    this.type = input.type;
 }
 
 // add the render method to the vAttribute prototype so an individual render method isn't created
