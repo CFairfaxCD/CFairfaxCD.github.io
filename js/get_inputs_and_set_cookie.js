@@ -156,8 +156,9 @@ function vAttribute(input, iName) {
     // check for 'select' inputs and add a human-readable "textValue" to allow for meaningful rendered data
     if(input.type == 'select-one') {
         if(input.innerHTML){
-            if(clickd_jquery('option[value="' + clickd_jquery(input).val() + '"]', clickd_jquery(input)).text() != ''){
-                this.textValue = clickd_jquery('option[value="' + clickd_jquery(input).val() + '"]', clickd_jquery(input)).text();
+            var optionText = clickd_jquery('option[value="' + clickd_jquery(input).val() + '"]', clickd_jquery(input)).text().trim();
+            if(optionText != ''){
+                this.textValue = optionText;
                 this.name = iName;
                 this.value = input.value;
                 this.type = input.type;
