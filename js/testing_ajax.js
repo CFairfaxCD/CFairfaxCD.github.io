@@ -10,3 +10,14 @@ function captureSubmit(url, data) {
         }
     });
 }
+
+clickd_jquery('document').ready(function(){
+    clickd_jquery('form').submit(function(e){
+        e.preventDefault;
+        var formData = clickd_jquery('form').serialize();
+        console.log(formData);
+        var postURL = clickd_jquery('form').attr('action');
+        console.log(postURL);
+        captureSubmit(postURL, formData);
+    });
+});
