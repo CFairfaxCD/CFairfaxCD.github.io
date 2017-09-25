@@ -1,17 +1,13 @@
 function captureSubmit(url, data) {
     console.log(data);
-    clickd_jquery.ajax({
-        url: url,
-        data: data,
-        type: 'POST',
-        success: function(data){
-            console.log(data);
-            alert('Submitted!');
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(xhr.status);
-            console.log(thrownError);
-          }
+    clickd_jquery.post(url, data)
+    .done(function(data){
+        console.log("Request successful: " + data);
+    })
+    .fail(function (jqxhr, textStatus, error) {
+        var err = textStatus + ", " + error;
+        console.log("Request Failed: " + err);
+        console.log("Details: " + jqxhr.responseText);
     });
 }
 
