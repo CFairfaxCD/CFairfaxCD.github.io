@@ -7,7 +7,11 @@ function captureSubmit(url, data) {
         success: function(data){
             console.log(data);
             alert('Submitted!');
-        }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+            console.log(thrownError);
+          }
     });
 }
 
