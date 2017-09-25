@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>Test Page One</title>
+        <script type="text/javascript" src="../js/testing_ajax.js"></script>
     </head>
     <body>
         <div class="nav">
@@ -26,16 +27,13 @@
                 <li>
                     <a href="/ajax-test">Page Two Success</a>
                 </li>
-                <li>
-                    <a href="/success">Page Two Success</a>
-                </li>
-                <li>
-                    <a href="/error">Page Two Success</a>
-                </li>
             </ul>
         </div>
         <div class="content">
-            <h1>Hello! This page is worth 3 points.</h1>
+            <form>
+                <input type='email' name='Email' id='Email'>
+                <input type='submit' onclick="captureSubmit('http://analytics.clickdimensions.com/forms/h/a5Phg2sIcGEy6NuagHqden', clickd_jquery('form').serialize())">
+            </form>
         </div>
         <div id="scripts">
             <script type=”text/javascript”>
@@ -47,7 +45,7 @@
             <script type="text/javascript" src="https://analytics.clickdimensions.com/ts.js" > </script>
             <script type="text/javascript">
                 var cdAnalytics = new clickdimensions.Analytics('analytics.clickdimensions.com');
-                cdAnalytics.setAccountKey('axuxpAfVVoUymSTtRSzik8');
+                cdAnalytics.setAccountKey('ajvPP5rJUyRL8vBldFPmA');
                 cdAnalytics.setDomain('cfairfaxcd.github.io');
                 cdAnalytics.setScore(typeof(cdScore) == "undefined" ? 0 : (cdScore == 0 ? null : cdScore));
                 cdAnalytics.trackPage();
