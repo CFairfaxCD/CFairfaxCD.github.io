@@ -1,14 +1,19 @@
-var Visitor = {
-    data : {
+function Visitor() {
+    // capture 'this' for private methods
+    var Visitor = this;
+    // establish object member for visitor data
+    this.data = {
         contact : {},
         lead : {}
-    },
-    write : function() {
+    }
+
+    // update the cookie and write it back to memory
+    this.write = function() {
         // update the Visitor.data object and then write updated information to a cookie
-        Visitor.fetch();
+        fetch();
         var inputs = clickd_jquery('.clickdform input, .clickdform select');
 
-        Visitor.update(inputs);
+        update(inputs);
 
         var cookieString = JSON.stringify(Visitor.data);
         // Set expiration date
@@ -17,66 +22,22 @@ var Visitor = {
         var expires = "expires=" + d.toUTCString();
         // write the cookie
         document.cookie = 'clickdynamo=' + cookieString + ';' + expires + ';path=/';
-    },
-    render : function() {
-        Visitor.fetch();
-        var ifElements = clickd_jquery('cd-if');
-        ifElements.each(function(i){
-            var dynamoIf = clickd_jquery(this).attr('data-dy-if');
-            if(dynamoIf.indexOf('=') != -1) {
-                dynamoIf = dynamoIf.split('=');
-                if(dynamoIf[0] != '' && dynamoIf[0].indexOf('.') != -1) {
-                    dynamoIf[0] = dynamoIf[0].split('.');
-                    if(Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].type == 'select-one' && Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].textValue == dynamoIf[1]) {
-                        this.style.display = '';
-                    } else if(Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].value == dynamoIf[1]) {
-                        this.style.display = '';
-                    }
-                } else if(dynamoIf[0] != '') {
-                    if(Visitor.data[dynamoIf[0]].type == 'select-one' && Visitor.data[dynamoIf[0]].textValue == dynamoIf[1]) {
-                        this.style.display = '';
-                    } else if(Visitor.data[dynamoIf[0]].value == dynamoIf[1]) {
-                        this.style.display = '';
-                    }
-                }
-            }
-        });
-        // handle rendering Visitor.data attributes to <cd></cd> tags
-        // this logic needs to be moved to vAttribute.prototype.render()
-        var valueFields = clickd_jquery('cd');
-        valueFields.each(function(i){
-            var dynamo = clickd_jquery(this).attr('data-dynamo');
-            if(dynamo.indexOf('.') != -1){
-                dynamo = dynamo.split('.');
-                if(Visitor.data[dynamo[0]][dynamo[1]]) {
-                    Visitor.data[dynamo[0]][dynamo[1]].render(this);
-                }
-            } else if(Visitor.data[dynamo]) {
-                Visitor.data[dynamo].render(this);
-            }
-        });
-        // handle updating input values to reflect information found in Visitor.data
-        // all of this logic needs to be moved to vAttribute.prototype.render()
-        var cdInputs = clickd_jquery('.clickdform input, .clickdform select');
-        cdInputs.each(function(i){
-            var leadField = clickd_jquery(this).attr('leadfield') ? clickd_jquery(this).attr('leadfield') : '';
-            var contactField = clickd_jquery(this).attr('contactfield') ? clickd_jquery(this).attr('contactfield') : '';
-            var inputName = this.name; 
-            if(leadField != '' || contactField != ''){
-                if(leadField == contactField && Visitor.data[leadField] && Visitor.data[leadField].name == leadField) {
-                    clickd_jquery(this).val(Visitor.data[leadField].value);
-                } else if(Visitor.data.lead[leadField] && Visitor.data.lead[leadField].name == leadField) {
-                    clickd_jquery(this).val(Visitor.data.lead[leadField].value);
-                } else if(Visitor.data.contact[contactField] && Visitor.data.contact[contactField].name == contactField) {
-                    clickd_jquery(this).val(Visitor.data.contact[contactField].value);
-                }
-            } else if(Visitor.data[inputName] && Visitor.data[inputName].name == inputName) {
-                clickd_jquery(this).val(Visitor.data[inputName].value);
-            }
-        });
-    },
-    fetch : function() {
-        vString = Visitor.getVCookie('clickdynamo');
+    }
+
+    // render all called values to the page in this order:
+    // display if blocks
+    // render visitor data to cd elements
+    // set input values to visitor data
+    this.render = function() {
+        fetch();
+        switchIfs();
+        renderAttrs();
+        updateInputVals();
+    }
+
+    // fetch the cookie and update Visitor.data
+    function fetch() {
+        vString = getVCookie('clickdynamo');
         // check to make sure the returned cookie is not empty
         // may need to set this up to catch an exception when the returned cookie is empty - talk through this
         if (vString != '') {
@@ -96,8 +57,10 @@ var Visitor = {
                 }
             }
         }
-    },
-    update : function(inputs) {
+    }
+
+    // capture form data and update the Visitor.data object
+    function update(inputs) {
         var excludedInputs = ['cd_postsettings', 'cd_domainalias', 'cd_timezone', 'cd_domain', 'cd_accountkey', 'reqField', '', 'iQapTcha'];
         for(i = 0; i < inputs.length; i++){
             // Check to see if the input name exists in the array ecludedInputs
@@ -129,8 +92,72 @@ var Visitor = {
                 }
             }
         }
-    },
-    getVCookie : function(cookname) {
+
+        // determine which if statements should be displayed and unhide
+        function switchIfs() {
+            var ifElements = clickd_jquery('cd-if');
+            ifElements.each(function(i){
+                var dynamoIf = clickd_jquery(this).attr('data-dy-if');
+                if(dynamoIf.indexOf('=') != -1) {
+                    dynamoIf = dynamoIf.split('=');
+                    if(dynamoIf[0] != '' && dynamoIf[0].indexOf('.') != -1) {
+                        dynamoIf[0] = dynamoIf[0].split('.');
+                        if(Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].type == 'select-one' && Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].textValue == dynamoIf[1]) {
+                            this.style.display = '';
+                        } else if(Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].value == dynamoIf[1]) {
+                            this.style.display = '';
+                        }
+                    } else if(dynamoIf[0] != '') {
+                        if(Visitor.data[dynamoIf[0]].type == 'select-one' && Visitor.data[dynamoIf[0]].textValue == dynamoIf[1]) {
+                            this.style.display = '';
+                        } else if(Visitor.data[dynamoIf[0]].value == dynamoIf[1]) {
+                            this.style.display = '';
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // render visitor information to cd elements
+    function renderAttrs() {
+        var valueFields = clickd_jquery('cd');
+        valueFields.each(function(i){
+            var dynamo = clickd_jquery(this).attr('data-dynamo');
+            if(dynamo.indexOf('.') != -1){
+                dynamo = dynamo.split('.');
+                if(Visitor.data[dynamo[0]][dynamo[1]]) {
+                    Visitor.data[dynamo[0]][dynamo[1]].render(this);
+                }
+            } else if(Visitor.data[dynamo]) {
+                Visitor.data[dynamo].render(this);
+            }
+        });
+    }
+
+    // set form input values to visitor data
+    function updateInputVals() {
+        var cdInputs = clickd_jquery('.clickdform input, .clickdform select');
+        cdInputs.each(function(i){
+            var leadField = clickd_jquery(this).attr('leadfield') ? clickd_jquery(this).attr('leadfield') : '';
+            var contactField = clickd_jquery(this).attr('contactfield') ? clickd_jquery(this).attr('contactfield') : '';
+            var inputName = this.name; 
+            if(leadField != '' || contactField != ''){
+                if(leadField == contactField && Visitor.data[leadField] && Visitor.data[leadField].name == leadField) {
+                    clickd_jquery(this).val(Visitor.data[leadField].value);
+                } else if(Visitor.data.lead[leadField] && Visitor.data.lead[leadField].name == leadField) {
+                    clickd_jquery(this).val(Visitor.data.lead[leadField].value);
+                } else if(Visitor.data.contact[contactField] && Visitor.data.contact[contactField].name == contactField) {
+                    clickd_jquery(this).val(Visitor.data.contact[contactField].value);
+                }
+            } else if(Visitor.data[inputName] && Visitor.data[inputName].name == inputName) {
+                clickd_jquery(this).val(Visitor.data[inputName].value);
+            }
+        });
+    }
+
+    // call cookie from memory - returns the string value of the cookie
+    function getVCookie(cookname) {
         var name = cookname + "=";
         // pull all cookies in a decoded format
         var decodedCookie = decodeURIComponent(document.cookie);
@@ -186,6 +213,7 @@ vAttribute.prototype.render = function(element) {
     }
 }
 
+// this is necesarry for setup during testing, but should be replaced by default CSS
 var hiddenIfs = document.querySelectorAll('cd-if');
 hiddenIfs.forEach(function(element){
     element.style.display = 'none';
@@ -197,8 +225,9 @@ if(Object.prototype.toString.call(clickd_jquery) != '[object Function]' && Objec
     var clickd_jquery = $.noConflict(true);
 }
 clickd_jquery(document).ready(function(){
-    Visitor.render();
+    var v = new Visitor();
+    v.render();
     clickd_jquery('.clickdform').submit(function(){
-        Visitor.write();
+        v.write();
     });
 });
