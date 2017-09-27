@@ -92,31 +92,31 @@ function Visitor() {
                 }
             }
         }
+    }
 
         // determine which if statements should be displayed and unhide
-        function switchIfs() {
-            var ifElements = clickd_jquery('cd-if');
-            ifElements.each(function(i){
-                var dynamoIf = clickd_jquery(this).attr('data-dy-if');
-                if(dynamoIf.indexOf('=') != -1) {
-                    dynamoIf = dynamoIf.split('=');
-                    if(dynamoIf[0] != '' && dynamoIf[0].indexOf('.') != -1) {
-                        dynamoIf[0] = dynamoIf[0].split('.');
-                        if(Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].type == 'select-one' && Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].textValue == dynamoIf[1]) {
-                            this.style.display = '';
-                        } else if(Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].value == dynamoIf[1]) {
-                            this.style.display = '';
-                        }
-                    } else if(dynamoIf[0] != '') {
-                        if(Visitor.data[dynamoIf[0]].type == 'select-one' && Visitor.data[dynamoIf[0]].textValue == dynamoIf[1]) {
-                            this.style.display = '';
-                        } else if(Visitor.data[dynamoIf[0]].value == dynamoIf[1]) {
-                            this.style.display = '';
-                        }
+    function switchIfs() {
+        var ifElements = clickd_jquery('cd-if');
+        ifElements.each(function(i){
+            var dynamoIf = clickd_jquery(this).attr('data-dy-if');
+            if(dynamoIf.indexOf('=') != -1) {
+                dynamoIf = dynamoIf.split('=');
+                if(dynamoIf[0] != '' && dynamoIf[0].indexOf('.') != -1) {
+                    dynamoIf[0] = dynamoIf[0].split('.');
+                    if(Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].type == 'select-one' && Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].textValue == dynamoIf[1]) {
+                        this.style.display = '';
+                    } else if(Visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].value == dynamoIf[1]) {
+                        this.style.display = '';
+                    }
+                } else if(dynamoIf[0] != '') {
+                    if(Visitor.data[dynamoIf[0]].type == 'select-one' && Visitor.data[dynamoIf[0]].textValue == dynamoIf[1]) {
+                        this.style.display = '';
+                    } else if(Visitor.data[dynamoIf[0]].value == dynamoIf[1]) {
+                        this.style.display = '';
                     }
                 }
-            });
-        }
+            }
+        });
     }
 
     // render visitor information to cd elements
