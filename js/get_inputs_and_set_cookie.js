@@ -219,6 +219,7 @@ hiddenIfs.forEach(function(element){
     element.style.display = 'none';
 });
 
+// generate Visitor
 if(Object.prototype.toString.call(clickd_jquery) != '[object Function]' && Object.prototype.toString.call(jQuery) == '[object Function]') {
     var clickd_jquery = jQuery.noConflict(true);
 } else if(Object.prototype.toString.call(clickd_jquery) != '[object Function]' && Object.prototype.toString.call($) == '[object Function]') {
