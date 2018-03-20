@@ -37,10 +37,10 @@ var Visitor = function Visitor() {
             visitor.data = JSON.parse(vString);
             // cycle through the visitor.data object,
             // re-instantiating each property as a vAttribute object
-            Object.entries(visitor.data).foreach(function (datum) {
+            Object.entries(visitor.data).forEach(function (datum) {
                 var key = datum[0];
 
-                Object.entries(visitor.data[key]).foreach(function (child) {
+                Object.entries(visitor.data[key]).forEach(function (child) {
                     var childKey = child[0];
                     if (visitor.data[key][childKey].hasOwnProperty('name')) {
                         visitor.data[key][childKey] = vAttribute(child[1], child[1].name);
@@ -61,7 +61,7 @@ var Visitor = function Visitor() {
             return excludedInputs.indexOf(input.name) === -1 && input.value != '';
         });
 
-        inputs.foreach(function (input) {
+        inputs.forEach(function (input) {
             // Check to see if an input has at least a leadfield or contactfield attribute
             // if not, assign an empty string to the variable(s)
             var leadField = input.attributes['leadfield'] ? input.attributes['leadfield'].value : '';
