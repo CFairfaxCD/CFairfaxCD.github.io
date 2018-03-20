@@ -31,7 +31,7 @@ var Visitor = function Visitor() {
     };
 
     var fetch = function fetch() {
-        vString = getVCookie('clickdynamo');
+        var vString = getVCookie('clickdynamo');
         // check to make sure the returned cookie is not empty
         if (vString != '') {
             visitor.data = JSON.parse(vString);
@@ -93,20 +93,20 @@ var Visitor = function Visitor() {
         var ifElements = clickd_jquery('cd-if');
         ifElements.each(function (i) {
             var dynamoIf = clickd_jquery(this).attr('data-dy-if');
-            if (dynamoIf.indexOf('=') != -1) {
+            if (dynamoIf.indexOf('=') !== -1) {
                 dynamoIf = dynamoIf.split('=');
-                if (dynamoIf[0] != '' && dynamoIf[0].indexOf('.') != -1) {
+                if (dynamoIf[0] !== '' && dynamoIf[0].indexOf('.') !== -1) {
                     dynamoIf[0] = dynamoIf[0].split('.');
                     if (visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].type == 'select-one' && visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].textValue == dynamoIf[1]) {
-                        this.style.display = '';
+                        this.className += ' show';
                     } else if (visitor.data[dynamoIf[0][0]][dynamoIf[0][1]].value == dynamoIf[1]) {
-                        this.style.display = '';
+                        this.className += ' show';
                     }
                 } else if (dynamoIf[0] != '') {
                     if (visitor.data[dynamoIf[0]].type == 'select-one' && visitor.data[dynamoIf[0]].textValue == dynamoIf[1]) {
-                        this.style.display = '';
+                        this.className += ' show';
                     } else if (visitor.data[dynamoIf[0]].value == dynamoIf[1]) {
-                        this.style.display = '';
+                        this.className += ' show';
                     }
                 }
             }
@@ -209,8 +209,9 @@ var vAttribute = function vAttribute(input, iName) {
     return attribute;
 };
 
+// This should be served as its own CSS file rather than written to the head by JS
 var hideIfs = function hideIfs() {
-    var css = '.cd-if { display: none; }',
+    var css = 'cd-if { display: none; } cf-if.show { display: inline; }',
         head = document.head || document.getElementsByTagName('head')[0],
         style = document.createElement('style');
 
