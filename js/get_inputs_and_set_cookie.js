@@ -1,5 +1,7 @@
 'use strict';
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var Visitor = function Visitor() {
     var visitor = {
         data: {
@@ -61,7 +63,7 @@ var Visitor = function Visitor() {
             return excludedInputs.indexOf(input.name) === -1 && input.value != '';
         });
 
-        inputs.forEach(function (input) {
+        [].concat(_toConsumableArray(inputs)).forEach(function (input) {
             // Check to see if an input has at least a leadfield or contactfield attribute
             // if not, assign an empty string to the variable(s)
             var leadField = input.attributes['leadfield'] ? input.attributes['leadfield'].value : '';
