@@ -16,7 +16,7 @@ var Visitor = function Visitor() {
 
             update(inputs);
 
-            var cookieString = JSON.stringify(undefined.data);
+            var cookieString = JSON.stringify(this.data);
             // Set expiration date
             var d = new Date();
             d.setTime(d.getTime() + 7776000000);
