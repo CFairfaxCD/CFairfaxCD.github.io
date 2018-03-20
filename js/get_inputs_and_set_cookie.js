@@ -213,7 +213,7 @@ var vAttribute = function vAttribute(input, iName) {
 
 // This should be served as its own CSS file rather than written to the head by JS
 var hideIfs = function hideIfs() {
-    var css = 'cd-if { display: none; } cf-if.show { display: inline; }',
+    var css = 'cd-if { display: none; } cd-if.show { display: inline; }',
         head = document.head || document.getElementsByTagName('head')[0],
         style = document.createElement('style');
 
