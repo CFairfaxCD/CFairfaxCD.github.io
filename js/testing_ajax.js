@@ -1,14 +1,14 @@
 function captureSubmit(url, data) {
-    console.log(data);
-    clickd_jquery.post(url, data)
-    .done(function(data){
-        console.log("Request successful: " + data);
-    })
-    .fail(function (jqxhr, textStatus, error) {
-        var err = textStatus + ", " + error;
-        console.log("Request Failed: " + err);
-        console.log("Details: " + jqxhr.responseText);
-    });
+    var req = new XMLHttpRequest
+    req.addEventListener("load", function(e) {
+        console.log('SUCCESS:\n' + e)
+    }),
+    req.addEventListener("error", function(e) {
+        console.log('ERROR:\n' + e)
+    }),
+    req.open("POST", url),
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"),
+    req.send(data)
 }
 
 clickd_jquery('document').ready(function(){
