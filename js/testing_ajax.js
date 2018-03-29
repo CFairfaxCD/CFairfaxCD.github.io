@@ -1,10 +1,10 @@
 function captureSubmit(url, data) {
     var req = new XMLHttpRequest
     req.addEventListener("load", function(e) {
-        console.log('SUCCESS:\n' + e)
+        console.log('SUCCESS:\n' + JSON.stringify(e))
     }),
     req.addEventListener("error", function(e) {
-        console.log('ERROR:\n' + e)
+        console.log('ERROR:\n' + JSON.stringify(e))
     }),
     req.open("POST", url),
     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"),
