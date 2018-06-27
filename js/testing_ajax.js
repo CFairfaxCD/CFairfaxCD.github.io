@@ -3,14 +3,18 @@ function captureSubmit(url, data) {
     req.addEventListener("load", function(e) {
         console.log('SUCCESS:\n' + JSON.stringify(e));
         console.log(JSON.stringify(req.responseURL));
-        clickd_jquery('body').append('<div>Success</div>');
-    }),
+        if(req.responseURL === 'https://cfairfaxcd.github.io/success') {
+            clickd_jquery('body').append('<div>Success</div>');
+        } else {
+            clickd_jquery('body').append('<div>Failure</div>');
+        }
+    });
     req.addEventListener("error", function(e) {
         console.log('ERROR:\n' + JSON.stringify(e))
-    }),
-    req.open("POST", url),
-    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"),
-    req.send(data)
+    });
+    req.open("POST", url);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.send(data);
 }
 
 clickd_jquery('document').ready(function(){
