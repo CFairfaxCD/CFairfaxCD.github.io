@@ -2,7 +2,7 @@ function captureSubmit(url, data) {
     var req = new XMLHttpRequest
     req.addEventListener("load", function(e) {
         console.log('SUCCESS:\n' + JSON.stringify(e));
-        console.log(JSON.stringify(req.response));
+        console.log(JSON.stringify(req.responseURL));
         clickd_jquery('body').append('<div>Success</div>');
     }),
     req.addEventListener("error", function(e) {
